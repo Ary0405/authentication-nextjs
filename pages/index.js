@@ -1,6 +1,6 @@
 import Head from 'next/head';
-import prisma from '../lib/prisma';
 import Register from '../components/Register';
+import Login from '../components/Login';
 
 export default function Home({ products }) {
   return (
@@ -10,25 +10,13 @@ export default function Home({ products }) {
         <meta name="description" content="Authentication Test" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <h1>Register</h1>
       <Register />
+      <br />
+      <hr />
+      <h1>Login</h1>
+      <Login />
       <footer></footer>
     </div>
   );
-}
-
-export async function getStaticProps(context) {
-  const data = await prisma.product.findMany({
-    include: {
-      category: true,
-    },
-  });
-
-  //convert decimal value to string to pass through as json
-  const products = data.map((product) => ({
-    ...product,
-    price: product.price.toString(),
-  }));
-  return {
-    props: { products },
-  };
 }
